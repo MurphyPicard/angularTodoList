@@ -3,11 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <title>Angular Todos</title>
-
+  <!-- angular script tag must be first-->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="todos.module.js"></script>
+  <script src="./controllers/todos.controller.js"></script>
 </head>
-<body>
+<body ng-controller='todosCtrl as vm'>
+  <h1>Ara's list of things to do.</h1>
+  <p>Mustache Test ... 1 + 1 = {{1+1}}</p>
+
+  <br>
+  <h2>Todos Completed</h2>
+
+    <div ng-repeat="todo in vm.todos | filter: {completed: true}">
+      <p>{{$index + 1}}. {{todo.name}} -- Completed? <button ng-click="todo.completed = false">{{todo.completed}}</button></p>
+    </div>
+
+  <br>
+  <h2>Need to be done still</h2>
+
+    <div ng-repeat="todo in vm.todos | filter: {completed: false}">
+      <p>{{$index + 1}}. {{todo.name}} -- Completed? <button ng-click="todo.completed = true">{{todo.completed}}</button></p>
+    </div>
+
+    <div>
+      <input type="text" ng-model="vm.newTodo">
+      <button ng-click="vm.addTodo()">Add Todo</button>
+      <p>User input: {{vm.newTodo}}</p>
+    </div>
 
 </body>
 </html>
